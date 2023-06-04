@@ -6,15 +6,15 @@ export interface NavOption {
 const NavItems: NavOption[] = [
   {
     id: 1,
-    name: "home",
+    name: "Home",
   },
   {
     id: 2,
-    name: "profile",
+    name: "Profile",
   },
   {
     id: 3,
-    name: "about",
+    name: "About",
   },
 ];
 
