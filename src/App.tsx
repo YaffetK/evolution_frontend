@@ -2,10 +2,9 @@ import { useState } from "react";
 import Navbar from "./components/Navbar.tsx";
 
 import "./App.css";
+import LoginForm from "./components/LoginForm.tsx";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   interface user {
     firstName: string;
     lastName: string;
@@ -32,16 +31,14 @@ function App() {
   const list: string[] = [...person.hobbies];
 
   return (
-    <div className="bg-beige w-full h-full">
+    <div className="bg-beige w-screen h-screen box-border ">
       <header>
         <Navbar />
       </header>
 
-      <div className="bg-white w-full h-full">
-        <form action="">
-          <input type="text" placeholder="email"></input>
-        </form>
-      </div>
+      <main className="bg-white w-full h-full box-border flex flex-col justify-center items-center ">
+        <LoginForm />
+      </main>
     </div>
   );
 }
