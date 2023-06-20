@@ -1,23 +1,33 @@
-import React, { MouseEventHandler } from "react";
+import React, { useTransition } from "react";
 import { useState } from "react";
 import axios from "axios";
+import { FaGithub, FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 type User = {
   email: string;
   password: string;
 };
 const LoginForm: React.FC = () => {
+  const [isPending, startTransition] = useTransition();
   const [user, setUser] = useState<User>({
     email: "",
     password: "",
   });
 
   async function handleLogin(data: User): Promise<User> {
-    const res = await axios.post("https:localhost:8080/auth/login", data);
+    try {
+      const res = await axios.post("https:localhost:8080/auth/login", data);
 
-    const user: User = res.data;
-
-    return user;
+      if (res.status === 200) {
+        const user: User = res.data;
+        return user;
+      } else {
+        throw new Error("Login failed");
+      }
+    } catch (error) {
+      throw new Error("An error occured during login");
+    }
   }
 
   function handleSubmit(): void {
@@ -33,12 +43,23 @@ const LoginForm: React.FC = () => {
 
   return (
     <div className="flex flex-row w-2/3 h-[700px] bg-lblue justify-center items-center box-border shadow-2xl rounded-2xl max-w-4xl">
-      <div className="flex flex-col w-3/5 h-full bg-transparent relative justify-center">
-        <p className=" absolute top-0 left-0 text-blue-gradient text-xl">
+      <div className="flex flex-col w-3/5 h-full bg-gray-500 relative justify-center">
+        <p className=" absolute top-20 left-10 text-blue-gradient text-xl">
           {" "}
           Evolution
         </p>
-        <form className="flex flex-col p-10 bg-white items-center">
+        <form className="flex flex-col w-full p-10 bg-white items-center">
+          <div className="flex w-full justify-evenly h-16">
+            <div className="p-2 h-10 ">
+              <FcGoogle />
+            </div>
+            <div className="p-2">
+              <FaGithub />
+            </div>
+            <div className="p-2">
+              <FaFacebook />
+            </div>
+          </div>
           <label htmlFor="email">Email</label>
           <input
             className="h-8 rounded"
@@ -68,9 +89,11 @@ const LoginForm: React.FC = () => {
       </div>
 
       {/*  */}
-      <div className="w-2/5 h-full bg-green-500 rounded-tr-2xl rounded-br-2xl">
+      <div className=" flex flex-col relative w-2/5 h-full bg-gray-700 rounded-tr-2xl rounded-br-2xl">
         {/*Sign up section */}
-        <p>Har du inget konto? tryck här</p>
+        <p className="absolute bottom-0 left-20 text-white">
+          Har du inget konto? tryck här
+        </p>
       </div>
     </div>
   );
