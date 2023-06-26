@@ -11,8 +11,13 @@ export default {
         yellows: "#E8E337",
         dgray: "#1E1E1E",
         white: "#EFEFEF",
+        "pale-blue": "hsl(221,100%,96%)",
+        "slate-blue": {
+          light: "hsl(252,100%,67%)",
+          dark: "hsl(241,81%, 54%)",
+        },
       },
     },
+    plugins: [],
   },
-  plugins: [],
 };
