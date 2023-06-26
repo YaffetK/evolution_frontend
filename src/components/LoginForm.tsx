@@ -42,22 +42,22 @@ const LoginForm: React.FC = () => {
   }
 
   return (
-    <div className="flex flex-row w-2/3 h-[700px] bg-lblue justify-center items-center box-border shadow-2xl rounded-2xl max-w-4xl">
-      <div className="flex flex-col w-3/5 h-full bg-gray-500 relative justify-center">
-        <p className=" absolute top-20 left-10 text-blue-gradient text-xl">
+    <div className="flex flex-row w-2/3 h-[700px] justify-center items-center box-border shadow-2xl max-w-4xl">
+      <div className="flex flex-col w-3/5 h-full bg-gradient-to-b from-slate-blue-light to-slate-blue-dark relative justify-center rounded-bl-lg rounded-tl-lg">
+        <p className=" absolute top-20 left-10 text-blue-gradient text-xl text-pale-blue">
           {" "}
           Evolution
         </p>
         <form className="flex flex-col w-full p-10 bg-white items-center">
           <div className="flex w-full justify-evenly h-16">
             <div className="p-2 h-10 ">
-              <FcGoogle />
+              <FcGoogle size={40} />
             </div>
             <div className="p-2">
-              <FaGithub />
+              <FaGithub size={40} />
             </div>
             <div className="p-2">
-              <FaFacebook />
+              <FaFacebook size={40} />
             </div>
           </div>
           <label htmlFor="email">Email</label>
@@ -89,9 +89,9 @@ const LoginForm: React.FC = () => {
       </div>
 
       {/*  */}
-      <div className=" flex flex-col relative w-2/5 h-full bg-gray-700 rounded-tr-2xl rounded-br-2xl">
+      <div className=" flex flex-col relative w-2/5 h-full bg-gray-500 rounded-br-lg rounded-tr-lg ">
         {/*Sign up section */}
-        <p className="absolute bottom-0 left-20 text-white">
+        <p className="absolute bottom-0 left-20 text-pale-blue">
           Har du inget konto? tryck här
         </p>
       </div>
