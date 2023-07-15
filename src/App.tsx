@@ -1,11 +1,10 @@
-import { useState } from "react";
-import Navbar from "./components/Navbar.tsx";
 import { Routes, Route } from "react-router-dom";
 
 import "./App.css";
-import LoginForm from "./components/LoginForm.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import About from "./pages/About.tsx";
+import Profile from "./pages/Profile.tsx";
+import Register from "./pages/Register.tsx";
 
 function App() {
   interface user {
@@ -46,6 +45,8 @@ function App() {
 
         <Route path="/" element={<LoginPage />} />
         <Route path="/about" element={<About />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   );

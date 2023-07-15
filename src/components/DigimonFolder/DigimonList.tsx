@@ -8,11 +8,23 @@ export type Digimon = {
   level: string;
 };
 
-const DigimonList = ({ digimons }: { digimons: Digimon[] }) => {
+const DigimonList = ({
+  digimons,
+  handleClicks,
+}: {
+  digimons: Digimon[];
+  handleClicks: () => void;
+}) => {
   return (
     <div className="grid gap-4 grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 md:grid-cols-2 sm:grid-cols-1">
       {digimons.map((d) => (
-        <DigimonCard img={d.img} name={d.name} />
+        <DigimonCard
+          key={d.name}
+          img={d.img}
+          level={d.level}
+          name={d.name}
+          handleClicks={handleClicks}
+        />
       ))}
     </div>
   );
