@@ -1,16 +1,19 @@
 import React, { useTransition } from "react";
 import { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { FaGithub, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers ";
+import { z } from "zod";
 
 type User = {
   email: string;
   password: string;
 };
 const LoginForm: React.FC = () => {
-  const [isPending, startTransition] = useTransition();
+  const [isLoading, setIsLoading] = useState();
   const [user, setUser] = useState<User>({
     email: "",
     password: "",
@@ -41,6 +44,31 @@ const LoginForm: React.FC = () => {
         console.error(error);
       });
   }
+
+  const LoginValidator = z.object({
+    username: z
+      .string()
+      .min(3, {
+        message: "Username must be at least 3 characters long",
+      })
+      .max(20, {
+        message: "Username must be at most 20 charaters long",
+      }),
+    password: z
+      .string()
+      .min(8, {
+        message: "password must be at least 8 characters long",
+      })
+      .max(20, {
+        message: "Password must be at most 20 characters long",
+      }),
+  });
+
+  type LoginCredentials = z.infer<typeof LoginValidator>;
+
+  type LoginResponse = {
+    accesToken: string;
+  };
 
   return (
     <div className="flex flex-row w-2/3 h-[700px] justify-center items-center box-border shadow-2xl max-w-4xl">

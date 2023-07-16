@@ -9,7 +9,7 @@ const Navbar: React.FC = () => {
     setShowDropDown(!showDropDown);
   };
   return (
-    <nav className="bg-dgray w-full h-auto ">
+    <nav className="bg-dgray w-full h-auto">
       <ul className="flex items-center justify-end mr-3">
         <li className="py-5 px-3 text-white text-xl hover:cursor-pointer hover:bg-gray-400">
           <Link className="text-white text-3xl" to="/">
