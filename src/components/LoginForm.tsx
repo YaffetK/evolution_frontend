@@ -1,19 +1,20 @@
-import React, { useTransition } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import axios, { AxiosError } from "axios";
 import { FaGithub, FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers ";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
+import { toast } from "react-hot-toast";
 
 type User = {
   email: string;
   password: string;
 };
-const LoginForm: React.FC = () => {
-  const [isLoading, setIsLoading] = useState();
+const LoginForm = () => {
   const [user, setUser] = useState<User>({
     email: "",
     password: "",
@@ -34,7 +35,7 @@ const LoginForm: React.FC = () => {
     }
   }
 
-  function handleSubmit(): void {
+  function Login(): void {
     console.log(user);
     handleLogin(user)
       .then((response) => {
@@ -45,6 +46,17 @@ const LoginForm: React.FC = () => {
       });
   }
 
+  const accessToken = useSelector(
+    (state: RootState) => state.user.userAccessToken
+  );
+
+  type RootState = {
+    user: {
+      userAccessToken: string;
+    };
+  };
+
+  // creating
   const LoginValidator = z.object({
     username: z
       .string()
@@ -67,14 +79,81 @@ const LoginForm: React.FC = () => {
   type LoginCredentials = z.infer<typeof LoginValidator>;
 
   type LoginResponse = {
-    accesToken: string;
+    accessToken: string;
   };
 
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm<LoginCredentials>({
+    resolver: zodResolver(LoginValidator),
+  });
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const locationForm = location.state.from?.pathname || "/dashboard";
+
+  // navigate user to dashboard if logged in
+  useEffect(() => {
+    if (accessToken) navigate("/dashboard");
+  });
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async ({ username, password }: LoginCredentials) => {
+      // this Login_URL normally goes into config file
+      // to be reused across the app
+
+      const LOGIN_URL = "token/obtain/";
+
+      try {
+        const { data } = await axios.post(
+          LOGIN_URL,
+          JSON.stringify({ username, password })
+        );
+
+        return data as LoginResponse;
+      } catch {
+        // mocked response
+        const data = {
+          accessToken: "mytoken",
+        };
+        return data as LoginResponse;
+      }
+    },
+    onSuccess: (data) => {
+      dispatch(
+        login({
+          username: getValues().username,
+          accessToken: data.accessToken,
+        })
+      );
+
+      const navTarget = locationForm || "/dashboard";
+
+      navigate(navTarget, { replace: !!locationForm });
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 401) {
+          return toast.error("Invalid credentials");
+        }
+      }
+      toast.error("Something went wrong, please try again.");
+    },
+  });
   return (
     <div className="flex flex-row w-2/3 h-[700px] justify-center items-center box-border shadow-2xl max-w-4xl">
       <div className="flex flex-col w-3/5 h-full bg-gray-400 relative justify-center rounded-bl-lg rounded-tl-lg">
         <p className=" absolute top-20 left-10 text-blue-gradient text-xl text-pale-blue"></p>
-        <form className="flex flex-col w-full p-5 bg-white items-center">
+        <h1 className="ac"> </h1>
+        <form
+          onSubmit={handleSubmit((data) => handleLogin(data))}
+          className="flex flex-col w-full p-5 bg-white items-center"
+        >
           <div className="flex w-full justify-evenly h-16">
             <div className="p-2 h-10 hover:cursor-pointer ">
               <FcGoogle size={40} />
@@ -88,6 +167,7 @@ const LoginForm: React.FC = () => {
           </div>
           <label htmlFor="email">Email</label>
           <input
+            autoFocus
             className="h-8 w-1/2 rounded"
             type="text"
             id="email"
@@ -95,6 +175,9 @@ const LoginForm: React.FC = () => {
             value={user.email}
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           ></input>
+          {/* {email.email && (
+          <h3>{errors.email</h3>
+        )} */}
           <label htmlFor="password">Password</label>
           <input
             className="h-8 w-1/2 rounded"
@@ -105,12 +188,7 @@ const LoginForm: React.FC = () => {
             onChange={(e) => setUser({ ...user, password: e.target.value })}
           ></input>
 
-          <button
-            className="bg-blue text-white mt-5 w-1/2"
-            onClick={handleSubmit}
-          >
-            Login
-          </button>
+          <button className="bg-blue text-white mt-5 w-1/2">Login</button>
         </form>
       </div>
 
@@ -126,5 +204,4 @@ const LoginForm: React.FC = () => {
     </div>
   );
 };
-
 export default LoginForm;
