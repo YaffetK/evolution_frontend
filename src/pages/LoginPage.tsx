@@ -1,6 +1,7 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import LoginForm from "../components/LoginForm";
+import { Button } from "@/components/ui/button";
 
 const LoginPage: React.FC = () => {
   return (
@@ -9,6 +10,7 @@ const LoginPage: React.FC = () => {
       <div className="flex items-center justify-center h-full">
         <LoginForm />
       </div>
+      <Button className="bg-red-500 w-1/2 hover:bg-black">Click me</Button>
     </div>
   );
 };
