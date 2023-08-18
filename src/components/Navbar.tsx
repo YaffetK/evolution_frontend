@@ -1,5 +1,3 @@
-import React from "react";
-import { NavOption } from "./Navbar";
 import NavItems from "./Navbar";
 
 const Navbar = () => {
