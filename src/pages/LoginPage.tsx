@@ -8,9 +8,7 @@ const LoginPage: React.FC = () => {
   return (
     <div className="bg-gradient-to-b from-slate-blue-light to-slate-blue-dark w-screen h-screen box-border flex flex-col ">
       <Navbar />
-      <div className="flex items-center justify-center h-full">
-        <Form />
-      </div>
+      <div className="flex items-center justify-center h-full"></div>
       <Button className="bg-red-500 w-1/2 hover:bg-black">Click me</Button>
     </div>
   );
