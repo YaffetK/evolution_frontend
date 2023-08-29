@@ -33,7 +33,7 @@ function App() {
   const list: string[] = [...person.hobbies];
 
   return (
-    <div className="bg-beige w-screen h-screen box-border ">
+    <div className="bg-beige w-screen box-border ">
       <Routes>
         {/* <header>
           <Navbar />
