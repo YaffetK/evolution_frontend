@@ -26,6 +26,7 @@ const About: React.FC = () => {
   }
 
   useEffect(() => {
+    setPostsPerPage(20);
     getAllDigimons();
   }, []);
 

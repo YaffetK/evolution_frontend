@@ -1,4 +1,3 @@
-import NavItems from "./NavItems";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 

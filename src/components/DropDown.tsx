@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { BsFillArrowDownCircleFill } from "react-icons/bs";
 
 const DropDown = ({ options }: { options: number[] }) => {

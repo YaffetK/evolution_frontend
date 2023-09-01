@@ -5,12 +5,12 @@ type User = {
   email: string;
   password: string;
   lastName: string;
+  age?: number;
 } & (MaleProps | FemaleProps);
 
 type MaleProps = {
   gender: "male";
   salary?: number;
-  age?: number;
 };
 
 type FemaleProps = {
@@ -20,15 +20,16 @@ type FemaleProps = {
 
 const RegisterForm: React.FC = () => {
   const [user, setUser] = useState<User>({
-    gender: "female",
+    gender: "male",
     name: "",
     lastName: "",
     password: "",
     email: "",
   });
 
-  const handleSubmit = () => {
-    alert("hello");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert("User registered" + JSON.stringify(user, null, 2));
   };
   return (
     <div className="flex flex-col justify-center items-center h-full w-full">

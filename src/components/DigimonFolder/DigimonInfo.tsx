@@ -1,5 +1,3 @@
-import React from "react";
-
 const DigimonInfo = ({ handleClicks }: { handleClicks: () => void }) => {
   return (
     <div className="flex flex-col bg-slate-400 text-2xl w-2/3 h-[500px] justify-center items-center mt-40">
