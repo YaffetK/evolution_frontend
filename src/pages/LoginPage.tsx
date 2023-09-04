@@ -1,9 +1,10 @@
+import LoginForm from "@/components/LoginForm";
 import Navbar from "../components/Navbar";
 import { Button } from "@/components/ui/button";
 
 const LoginPage: React.FC = () => {
   function merge<T, U>(objA: T, objB: U) {
-    return { ...objA, objB };
+    return { ...objA, ...objB };
   }
 
   const mergedObj = merge({ name: "Yaffet" }, { age: 26 });
@@ -14,7 +15,10 @@ const LoginPage: React.FC = () => {
       <Navbar />
       <div className="flex items-center justify-center h-full w-full ">
         <div className="w-full">
-          <Button className="bg-red-500 w-1/2 hover:bg-black">Click me</Button>
+          <LoginForm />
+          {/* <Button variant="default" size="lg" className="text-black">
+            Click me
+          </Button> */}
         </div>
       </div>
     </div>

@@ -1,20 +1,21 @@
 export interface NavOption {
   id: number;
-  url: string;
+  path: string;
 }
 
 const NavItems: NavOption[] = [
   {
     id: 1,
-    url: "home",
+    path: "/",
   },
   {
     id: 2,
-    url: "profile",
+    path: "profile",
   },
   {
     id: 3,
-    url: "about",
+
+    path: "about",
   },
 ];
 

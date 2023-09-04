@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import DropDown from "./DropDown";
+import { DropdownMenu, DropdownMenuItem } from "./ui/dropdown-menu";
+import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
 
 const Navbar: React.FC = () => {
   const [showDropDown, setShowDropDown] = useState(false);
@@ -25,22 +28,21 @@ const Navbar: React.FC = () => {
             onClick={handleDropDownClick}
             className="p-5 text-black text-3xl hover:cursor-pointer hover:bg-gray-400"
           >
-            Profile
-          </li>
-          {showDropDown && (
-            <div className="bg-dgray -z-10 shadow-md ">
-              <li className="p-10 text-black text-xl hover:cursor-pointer hover:bg-gray-400">
-                <Link className="text-black" to="/profile">
-                  Your account
-                </Link>
-              </li>
-              <li className="p-10 text-black text-xl hover:cursor-pointer hover:bg-gray-400">
-                <Link className="text-black" to="/profile">
-                  Sign out
-                </Link>
-              </li>
-            </div>
-          )}
+            <DropDown />
+          </li>{" "}
+          {/*
+             <div className="bg-dgray -z-10 shadow-md ">
+               <li className="p-10 text-black text-xl hover:cursor-pointer hover:bg-gray-400">
+                 <Link className="text-black" to="/profile">
+                   Your account
+                 </Link>
+               </li>
+               <li className="p-10 text-black text-xl hover:cursor-pointer hover:bg-gray-400">
+                 <Link className="text-black" to="/profile">
+                   Sign out
+                 </Link>
+               </li>
+             </div> */}
         </ul>
       </ul>
 
