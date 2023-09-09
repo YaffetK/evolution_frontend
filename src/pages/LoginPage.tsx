@@ -1,25 +1,16 @@
 import LoginForm from "@/components/LoginForm";
 import Navbar from "../components/Navbar";
 import { Button } from "@/components/ui/button";
+import { merge } from "@/lib/utils";
 
-const LoginPage: React.FC = () => {
-  function merge<T, U>(objA: T, objB: U) {
-    return { ...objA, ...objB };
-  }
-
+const LoginPage = () => {
   const mergedObj = merge({ name: "Yaffet" }, { age: 26 });
   console.log(`mergedObj is => ${mergedObj.name}`);
 
   return (
-    <div className="bg-gradient-to-b from-slate-blue-light to-slate-blue-dark w-screen h-screen box-border flex flex-col ">
-      <Navbar />
-      <div className="flex items-center justify-center h-full w-full ">
-        <div className="w-full">
-          <LoginForm />
-          {/* <Button variant="default" size="lg" className="text-black">
-            Click me
-          </Button> */}
-        </div>
+    <div className="bg-gradient-to-b from-slate-blue-light to-slate-blue-dark w-screen h-screen box-border flex flex-col mx-auto p-4 min-w-min ">
+      <div className="mx-auto">
+        <LoginForm />
       </div>
     </div>
   );

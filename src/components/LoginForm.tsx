@@ -13,10 +13,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
-import { FormEventHandler, useRef } from "react";
+import { FormEventHandler, useState } from "react";
 
 const formSchema = z.object({
-  username: z
+  userName: z
     .string()
     .min(3, { message: "Username must be at least 2 characters" })
     .max(50, { message: "Username must have maximum 50 characters" }),
@@ -24,15 +24,16 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-  const inputRef = useRef({
-    username: "",
+  // här vi set user till ett objekt av typen FormData
+  const [user, setUser] = useState<FormData>({
+    userName: "",
     password: "",
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      userName: "",
       password: "",
     },
   });
@@ -43,52 +44,50 @@ const LoginForm = () => {
     e.preventDefault();
 
     const a: FormData = form.getValues();
-    if (a.username.length > 8) {
+    if (a.userName.length >= 8) {
       return { ...a };
+    } else if (a.password === "Hello") {
+      throw "Error";
     } else {
-      form.setError("username", {
+      form.setError("userName", {
         type: "manual",
-        message: `${a.username} is not correct`,
+        message: `${a.userName} is not correct`,
       });
     }
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <div className="flex items-center justify-center max-w-lg p-6 mx-auto min-w-max space-y-8 text-black w-full">
       <Form {...form}>
-        <form
-          onSubmit={handleInput}
-          className="space-y-8 text-black w-2/3 justify-center items-center"
-        >
+        <form onSubmit={handleInput}>
           <FormField
             control={form.control}
-            name="username"
+            name="userName"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Username</FormLabel>
                 <FormControl>
-                  <Input
-                    ref={inputRef}
-                    placeholder="enter username"
-                    {...field}
-                  />
+                  <Input placeholder="enter username" {...field} />
                 </FormControl>
 
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="enter password"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your public display name.
-                </FormDescription>
+                <FormLabel>Password</FormLabel>
+                <Input
+                  type="password"
+                  placeholder="enter password"
+                  {...field}
+                />
+
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button
+            variant="destructive"
+            className=" bg-cyan-500 mt-3 w-4/5"
+            type="submit"
+          >
+            Submit
+          </Button>
         </form>
       </Form>
     </div>

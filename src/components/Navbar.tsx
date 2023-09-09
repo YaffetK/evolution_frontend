@@ -1,34 +1,41 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import DropDown from "./DropDown";
-import { DropdownMenu, DropdownMenuItem } from "./ui/dropdown-menu";
-import { DropdownMenuArrow } from "@radix-ui/react-dropdown-menu";
 
-const Navbar: React.FC = () => {
-  const [showDropDown, setShowDropDown] = useState(false);
+import HamburgarMenu from "./HamburgarMenu";
+import NavItems from "./NavItems";
 
-  const handleDropDownClick = () => {
-    setShowDropDown(!showDropDown);
-  };
+const Navbar = () => {
+  const [isToggled, setIsToggled] = useState<boolean>(false);
+
+  function handleToggle() {
+    setIsToggled(!isToggled);
+  }
+
   return (
     <nav className="bg-dgray w-full h-auto">
       <ul className="flex items-center justify-end mr-3">
-        <li className="py-5 px-3 text-black text-xl hover:cursor-pointer hover:bg-gray-400">
-          <Link className="text-black text-3xl" to="/">
-            Home
-          </Link>
-        </li>
-        <li className="p-5 text-black t hover:cursor-pointer hover:bg-gray-400">
-          <Link className="text-black text-3xl" to="/about">
-            About
-          </Link>
-        </li>
+        {NavItems.map((item) => {
+          return (
+            <li
+              key={item.id}
+              className="py-5 px-3 text-black text-xl hover:cursor-pointer hover:bg-gray-400"
+            >
+              <Link className="text-black text-3xl" to="/">
+                {item.name}
+              </Link>
+            </li>
+          );
+        })}
+
         <ul>
-          <li
-            onClick={handleDropDownClick}
-            className="p-5 text-black text-3xl hover:cursor-pointer hover:bg-gray-400"
-          >
-            <DropDown />
+          <li className="p-5 text-black text-3xl hover:cursor-pointer hover:bg-gray-400">
+            {/* <DropDown /> */}
+
+            <HamburgarMenu
+              navItems={NavItems}
+              isToggled={isToggled}
+              handleToggle={handleToggle}
+            />
           </li>{" "}
           {/*
              <div className="bg-dgray -z-10 shadow-md ">
@@ -46,7 +53,7 @@ const Navbar: React.FC = () => {
         </ul>
       </ul>
 
-      <h1 className="text-black font-serif absolute top-4 left-4">
+      <h1 className="text-black font-serif absolute top-4 left-4 text-3xl md:text-5xl lg:text-6xl">
         {" "}
         Evolution
       </h1>
